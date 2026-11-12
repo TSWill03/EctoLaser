@@ -1,0 +1,5 @@
+# Instalar preferencialmente com Python 3.11 ou 3.12 em ambiente virtual.
+# A instalacao e a compatibilidade real da maquina ainda precisam ser verificadas.
+opencv-python>=4.8,<6
+ultralytics>=8.3,<9
+pyserial>=3.5,<4

@@ -1,0 +1,24 @@
+name: EctoLaser prototype tests
+
+on:
+  push:
+    branches: ["feat/uno-vision-prototype"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'opencv-python-headless==4.13.0.92' numpy
+      - name: Run tests (no webcam needed)
+        run: python -m unittest discover -s tests -v
