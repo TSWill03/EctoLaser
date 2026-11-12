@@ -11,23 +11,27 @@ Não há coleta, armazenamento, envio ou comparação de fotografias de pessoas,
 ## Requisitos
 
 - Windows com webcam funcional.
-- Python 3.11+ e OpenCV com `QRCodeDetector`, `QRCodeEncoder_create` e cascades Haar (no Destruking foi validado OpenCV 5.0).
+- Python 3.11+ e ambiente virtual com **OpenCV 4.13** (com `QRCodeDetector`, `QRCodeEncoder_create` e `CascadeClassifier`). No Destruking foi validada a webcam com OpenCV 5.0, mas essa versão falhou no teste de `CascadeClassifier` em CI Linux.
 - Opcional Arduino UNO com firmware `firmware/uno_ectolaser_status/uno_ectolaser_status.ino` e `pyserial` instalado se usar `--port`.
 
-### Executar na cópia já colocada no Destruking
+### Executar o checkout completo do GitHub no notebook
 
 ```powershell
-cd "C:\Users\Usuario\Downloads\EctoLaser-UNO-Prototipo"
-\.venv\Scripts\python.exe demo\webcam_demo.py --make-badge demo\badge_wicolly_demo.png
-\.venv\Scripts\python.exe demo\webcam_demo.py --check-camera --camera 0
-python demo\webcam_demo.py --camera 0
+cd "$env:USERPROFILE\Downloads"
+git clone -b feat/uno-vision-prototype https://github.com/TSWill03/EctoLaser.git EctoLaser-Demo
+cd EctoLaser-Demo
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r demo\requirements-demo.txt
+.\.venv\Scripts\python.exe demo\webcam_demo.py --make-badge demo\badge_wicolly_demo.png
+.\.venv\Scripts\python.exe demo\webcam_demo.py --check-camera --camera 0
+.\.venv\Scripts\python.exe demo\webcam_demo.py --camera 0
 ```
 
-Crie previamente a `venv` e instale as dependências, caso não utilize o iniciador:
+Se você já clonou a branch, mas ainda não instalou as dependências, prepare o ambiente virtual:
 
 ```powershell
 python -m venv .venv
-.venv\Scripts\python.exe -m pip install -r demo\requirements-demo.txt
+.\.venv\Scripts\python.exe -m pip install -r demo\requirements-demo.txt
 ```
 
 Não utilize `opencv-python 5.0` global para este demo: a classe Haar `cv2.CascadeClassifier` pode não estar disponível nessa versão. O iniciador prepara OpenCV 4.13 em ambiente isolado.
@@ -39,8 +43,8 @@ Alternativa: dê duplo clique em `demo/INICIAR_ECTOLASER.bat`. Se a câmera padr
 Com a placa conectada, firmware compilado/enviado pela IDE Arduino e porta serial conhecida:
 
 ```powershell
-python -m pip install pyserial
-python demo\webcam_demo.py --camera 0 --port COM5
+.\.venv\Scripts\python.exe -m pip install pyserial
+.\.venv\Scripts\python.exe demo\webcam_demo.py --camera 0 --port COM5
 ```
 
 O LED embutido somente pisca quando um rosto está no quadro e o QR de demonstração foi lido recentemente. Isso não constitui verificação de identidade e **não aciona laser, relé, motor ou outro equipamento**.
@@ -48,9 +52,9 @@ O LED embutido somente pisca quando um rosto está no quadro e o QR de demonstra
 ## Testes de software
 
 ```powershell
-python -m unittest discover -s tests -v
-python demo\webcam_demo.py --check-camera --camera 0
-python demo\webcam_demo.py --camera 0 --headless --max-frames 30
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe demo\webcam_demo.py --check-camera --camera 0
+.\.venv\Scripts\python.exe demo\webcam_demo.py --camera 0 --headless --max-frames 30
 ```
 
 A câmera é usada localmente; esses comandos não salvam imagens ou vídeos. O teste da webcam em modo headless só verifica a captura e o pipeline, **não a identificação de Wicolly nem a qualidade de um detector de carrapatos**.
