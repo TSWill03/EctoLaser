@@ -18,10 +18,19 @@ Não há coleta, armazenamento, envio ou comparação de fotografias de pessoas,
 
 ```powershell
 cd "C:\Users\Usuario\Downloads\EctoLaser-UNO-Prototipo"
-python demo\webcam_demo.py --make-badge demo\badge_wicolly_demo.png
-python demo\webcam_demo.py --check-camera --camera 0
+\.venv\Scripts\python.exe demo\webcam_demo.py --make-badge demo\badge_wicolly_demo.png
+\.venv\Scripts\python.exe demo\webcam_demo.py --check-camera --camera 0
 python demo\webcam_demo.py --camera 0
 ```
+
+Crie previamente a `venv` e instale as dependências, caso não utilize o iniciador:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r demo\requirements-demo.txt
+```
+
+Não utilize `opencv-python 5.0` global para este demo: a classe Haar `cv2.CascadeClassifier` pode não estar disponível nessa versão. O iniciador prepara OpenCV 4.13 em ambiente isolado.
 
 Alternativa: dê duplo clique em `demo/INICIAR_ECTOLASER.bat`. Se a câmera padrão for outra, execute `--camera 1` ou `--camera 2`. Pressione `Q` ou `Esc` para sair. Mostre o QR `badge_wicolly_demo.png` impresso ou pela tela de outro dispositivo à câmera.
 
