@@ -53,3 +53,15 @@ Estudo de mecanismo físico seguro (ainda não implementado)
 - [Carrapatos em diferentes estágios (Roboflow Universe)](https://universe.roboflow.com/ric-workspace/tick-and-flea-detection).
 
 **Fonte canônica dos datasets próprios:** projeto Roboflow indicado acima. Não versionar imagens, pesos, tokens ou API keys sem revisar autorização, privacidade e licença.
+
+## Demonstração com webcam e Arduino UNO (branch de protótipo)
+
+Na branch `feat/uno-vision-prototype`, consulte [Guia de webcam](docs/WEBCAM_DEMO.md) e [Arquitetura UNO + host](docs/ARCHITECTURE.md).
+
+- `demo/webcam_demo.py`: detecta **presença de rosto**, sem reconhecer identidades; lê um QR de demonstração rotulado “Wicolly”.
+- `demo/INICIAR_ECTOLASER.bat`: iniciador no Windows com ambiente virtual isolado e OpenCV 4.13.
+- `demo/requirements-demo.txt`: dependências da demonstração local.
+- `firmware/uno_ectolaser_status/`: LED integrado como indicador opcional, **nunca** disparo de laser.
+- Testes automáticos no GitHub Actions (sem câmera, imagens pessoais ou hardware); a webcam real exige execução interativa no computador do usuário.
+
+**Atenção:** ler um crachá QR não autentica a pessoa e detectar uma face não identifica “Wicolly”. Fotografias do Instagram não foram utilizadas. Para o objetivo real do EctoLaser, será necessário um modelo treinado com aglomerados larvais no capim.
