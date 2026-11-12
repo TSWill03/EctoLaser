@@ -1,0 +1,4 @@
+# EctoLaser webcam QR demo: OpenCV 4.x retains CascadeClassifier in Python.
+# Use in a separate virtual environment; OpenCV 5.x may omit Haar cascade bindings.
+opencv-python==4.13.0.92
+numpy>=2.2,<3
